@@ -2,15 +2,12 @@
 pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
-
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/cryptography/ECDSAUpgradeable.sol"; 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
-
 
 
 interface IstartNFT {
@@ -18,7 +15,7 @@ interface IstartNFT {
     function getNFT(uint256 tokenId) external;
 }
 
-contract BlindBox is Initializable, ERC1155Upgradeable, OwnableUpgradeable, UUPSUpgradeable{
+contract BlindBox is Initializable, ERC1155Upgradeable, OwnableUpgradeable{
     using ECDSAUpgradeable for bytes32;
     using StringsUpgradeable for uint256;
 
@@ -55,15 +52,9 @@ contract BlindBox is Initializable, ERC1155Upgradeable, OwnableUpgradeable, UUPS
     function initialize(address backend_)initializer public {
         __ERC1155_init("");
         __Ownable_init();
-        __UUPSUpgradeable_init();
         _backend = backend_;
     }
 
-    function _authorizeUpgrade(address newImplementation)
-        internal
-        onlyOwner
-        override
-    {}
 
     function setURI(string memory uri_) external onlyOwner {
         _setURI(uri_);
